@@ -1,26 +1,35 @@
 package com.example.is2_xd.model.entity;
-
 import java.util.Date;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
+@Table(name = "paciente")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Paciente {
-    private int id_paciente;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idPaciente;
+
     private String nombre;
+
     private String apellidos;
+
     private String telefono;
-    private String DNI;
-    private Date fecha_nacimiento;
+
+    @Column(unique = true)
+    private String dni;
+
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
+
     private String correo;
-    private int id_seguro_medico; //FK
 
-    public void Paciente(int a, String b, String c, String d, String e, Date f, String g, int h) {
-        this.id_paciente = a;
-        this.nombre = b;
-        this.apellidos = c;
-        this.telefono = d;
-        this.DNI = e;
-        this.fecha_nacimiento = f;
-        this.correo = g;
-        this.id_seguro_medico = h;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "id_seguro_medico")
+    private SeguroMedico seguroMedico;
 }
